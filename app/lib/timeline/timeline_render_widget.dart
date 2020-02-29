@@ -261,6 +261,7 @@ class TimelineRenderObject extends RenderBox {
 
           /// Draw the correct asset.
           if (asset is TimelineImage) {
+           
             canvas.drawImageRect(
                 asset.image,
                 Rect.fromLTWH(0.0, 0.0, asset.width, asset.height),
@@ -277,7 +278,7 @@ class TimelineRenderObject extends RenderBox {
             /// An Axis-Aligned Bounding Box (AABB) is already set up when the asset is first loaded.
             /// We rely on this AABB to perform screen-space calculations.
             Alignment alignment = Alignment.center;
-            BoxFit fit = BoxFit.cover;
+            BoxFit fit = BoxFit.fitHeight;
 
             nima.AABB bounds = asset.setupAABB;
 

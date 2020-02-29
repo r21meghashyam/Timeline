@@ -12,6 +12,7 @@ import 'package:timeline/timeline/timeline.dart';
 import 'package:timeline/timeline/timeline_entry.dart';
 import 'package:timeline/timeline/timeline_render_widget.dart';
 import 'package:timeline/timeline/timeline_utils.dart';
+import '../store.dart';
 
 typedef ShowMenuCallback();
 typedef SelectItemCallback(TimelineEntry item);
@@ -237,7 +238,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
       timeline.onEraChanged = null;
     }
   }
-
+  GlobalKey _key=GlobalKey();
   /// This widget is wrapped in a [Scaffold] to have the classic Material Design visual layout structure.
   /// Then the body of the app is made of a [GestureDetector] to properly handle all the user-input events.
   /// This widget then lays down a [Stack]:
@@ -248,8 +249,11 @@ class _TimelineWidgetState extends State<TimelineWidget> {
   Widget build(BuildContext context) {
     EdgeInsets devicePadding = MediaQuery.of(context).padding;
     if (timeline != null) {
-      timeline.devicePadding = devicePadding;
+      timeline.devicePadding = devicePadding;    
+        store.dispatch(timeline.devicePadding.top+56);
+        print("dispatched");
     }
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(
@@ -268,6 +272,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                 touchBubble: onTouchBubble,
                 touchEntry: onTouchEntry),
             Column(
+                key: _key,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
@@ -283,6 +288,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                       width: double.infinity,
                       child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          
                           children: <Widget>[
                             IconButton(
                               padding:
@@ -344,6 +350,7 @@ class _TimelineWidgetState extends State<TimelineWidget> {
                                     })),
                           ]))
                 ])
+          
           ])),
     );
   }

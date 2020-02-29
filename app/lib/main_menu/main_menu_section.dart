@@ -26,7 +26,8 @@ class MenuSection extends StatefulWidget {
   MenuSection(this.title, this.backgroundColor, this.accentColor,
       this.menuOptions, this.navigateTo, this.isActive,
       {this.assetId, Key key})
-      : super(key: key);
+      : super(key: key){
+      }
 
   @override
   State<StatefulWidget> createState() => _SectionState();

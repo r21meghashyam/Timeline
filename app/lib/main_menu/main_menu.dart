@@ -204,7 +204,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
                     color: Colors.black.withOpacity(0.65)),
               ),
               Text(
-                "Your Favorites",
+                "Your Favoritess",
                 style: TextStyle(
                     fontSize: 20.0,
                     fontFamily: "RobotoMedium",
@@ -292,7 +292,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> {
                                             child: Image.asset(
                                                 "assets/twoDimensions_logo.png",
                                                 height: 10.0))),
-                                    Text("The History of Everything",
+                                    Text("Meghashyam Bhandary",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color: darkText.withOpacity(

@@ -38,13 +38,19 @@ class _ArticleWidgetState extends State<ArticleWidget> {
 
   /// This parameter helps control the Amelia Earhart and the Newton animations.
   /// Test it out yourself! =)
-  Offset _interactOffset;
-
+  double _interactOffset=0;
+  ScrollController _controller;
+  _scrollListener() {
+    setState((){
+    _interactOffset = _controller.offset;
+    });
+ }
   /// Set up the markdown style and the local field variables for this page.
   @override
   initState() {
     super.initState();
-
+  _controller = ScrollController();
+  _controller.addListener(_scrollListener);
     TextStyle style = TextStyle(
         color: darkText.withOpacity(darkText.opacity * 0.68),
         fontSize: 17.0,
@@ -99,6 +105,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
         loadMarkdown(widget.article.articleFilename);
       }
     });
+
   }
 
   /// Load the markdown file from the assets and set the contents of the page to its value.
@@ -141,6 +148,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                     )),
                 Expanded(
                     child: SingleChildScrollView(
+                      controller: _controller,
                         padding:
                             EdgeInsets.only(left: 20, right: 20, bottom: 30),
                         child: Column(
@@ -148,14 +156,14 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                           children: <Widget>[
                             GestureDetector(
                                 onPanStart: (DragStartDetails details) {
-                                  setState(() {
-                                    _interactOffset = details.globalPosition;
-                                  });
+                                  // setState(() {
+                                  //   _interactOffset = details.globalPosition;
+                                  // });
                                 },
                                 onPanUpdate: (DragUpdateDetails details) {
-                                  setState(() {
-                                    _interactOffset = details.globalPosition;
-                                  });
+                                  // setState(() {
+                                  //   _interactOffset = details.globalPosition;
+                                  // });
                                 },
                                 onPanEnd: (DragEndDetails details) {
                                   setState(() {

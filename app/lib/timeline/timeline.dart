@@ -254,6 +254,7 @@ class Timeline {
   /// decode the JSON file, and populate all the [TimelineEntry]s.
   Future<List<TimelineEntry>> loadFromBundle(String filename) async {
     String data = await rootBundle.loadString(filename);
+
     List jsonEntries = json.decode(data) as List;
 
     List<TimelineEntry> allEntries = List<TimelineEntry>();
@@ -574,7 +575,6 @@ class Timeline {
               ui.Codec codec = await ui.instantiateImageCodec(list);
               ui.FrameInfo frame = await codec.getNextFrame();
               imageAsset.image = frame.image;
-
               break;
           }
 

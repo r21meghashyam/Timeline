@@ -28,7 +28,7 @@ class TimelineEntryWidget extends LeafRenderObjectWidget {
   final TimelineEntry timelineEntry;
   /// If this widget also has a custom controller, the [interactOffset]
   /// parameter can be used to detect motion effects and alter the [FlareActor] accordingly.
-  final Offset interactOffset;
+  final double interactOffset;
 
   TimelineEntryWidget(
       {Key key, this.isActive, this.timelineEntry, this.interactOffset})
@@ -72,7 +72,7 @@ class VignetteRenderObject extends RenderBox {
   bool _firstUpdate = true;
   bool _isFrameScheduled = false;
   double _lastFrameTime = 0.0;
-  Offset interactOffset;
+  double interactOffset;
   Offset _renderOffset;
 
   TimelineEntry _timelineEntry;
@@ -190,13 +190,12 @@ class VignetteRenderObject extends RenderBox {
 
     double w = asset.width;
     double h = asset.height;
-
     /// If the asset is just a static image, draw the image directly to [canvas].
     if (asset is TimelineImage) {
       canvas.drawImageRect(
           asset.image,
-          Rect.fromLTWH(0.0, 0.0, asset.width, asset.height),
-          Rect.fromLTWH(offset.dx + size.width - w, asset.y, w, h),
+          Rect.fromLTWH(0.0, 0.0, 300, 300),
+          Rect.fromLTWH(offset.dx + size.width - 300, interactOffset*-1, 300, 300),
           Paint()
             ..isAntiAlias = true
             ..filterQuality = ui.FilterQuality.low
@@ -208,7 +207,7 @@ class VignetteRenderObject extends RenderBox {
       /// An Axis-Aligned Bounding Box (AABB) is already set up when the asset is first loaded.
       /// We rely on this AABB to perform screen-space calculations.
       nima.AABB bounds = asset.setupAABB;
-
+//20.0 374.0  300.0 877.9333374633713 300.0 300.0
       double contentHeight = bounds[3] - bounds[1];
       double contentWidth = bounds[2] - bounds[0];
       double x =
@@ -337,21 +336,21 @@ class VignetteRenderObject extends RenderBox {
 
       /// 2. Move the [canvas] to the right position so that the widget's position
       /// is center-aligned based on its offset, size and alignment position.
-      canvas.translate(
-          renderOffset.dx +
-              renderSize.width / 2.0 +
-              (alignment.x * renderSize.width / 2.0),
-          renderOffset.dy +
-              renderSize.height / 2.0 +
-              (alignment.y * renderSize.height / 2.0));
-      /// 3. Scale depending on the [fit].
-      canvas.scale(scaleX, scaleY);
-      /// 4. Move the canvas to the correct [_flareActor] position calculated above.
-      canvas.translate(x, y);
-      /// 5. perform the drawing operations.
-      _flareActor.draw(canvas);
-      /// 6. Restore the canvas' original transform state.
-      canvas.restore();
+      // canvas.translate(
+      //     renderOffset.dx +
+      //         renderSize.width / 2.0 +
+      //         (alignment.x * renderSize.width / 2.0),
+      //     renderOffset.dy +
+      //         renderSize.height / 2.0 +
+      //         (alignment.y * renderSize.height / 2.0));
+      // /// 3. Scale depending on the [fit].
+      // canvas.scale(scaleX, scaleY);
+      // /// 4. Move the canvas to the correct [_flareActor] position calculated above.
+      // canvas.translate(x, y);
+      // /// 5. perform the drawing operations.
+      // _flareActor.draw(canvas);
+      // /// 6. Restore the canvas' original transform state.
+      // canvas.restore();
     }
     canvas.restore();
   }
@@ -377,6 +376,7 @@ class VignetteRenderObject extends RenderBox {
     if (_timelineEntry != null) {
       TimelineAsset asset = _timelineEntry.asset;
       if (asset is TimelineNima && _nimaActor != null) {
+        /*
         asset.animationTime += elapsed;
 
         if (asset.loop) {
@@ -452,7 +452,9 @@ class VignetteRenderObject extends RenderBox {
           _nimaController.advance(_nimaActor, localTouchPosition, elapsed);
         }
         _nimaActor.advance(elapsed);
+        */
       } else if (asset is TimelineFlare && _flareActor != null) {
+        /*
         /// Some [TimelineFlare] assets have a custom intro that's played
         /// when they're painted for the first time.
         if (_firstUpdate) {
@@ -551,6 +553,7 @@ class VignetteRenderObject extends RenderBox {
         }
         /// Advance the [FlutterActorArtboard].
         _flareActor.advance(elapsed);
+      */
       }
     }
 
